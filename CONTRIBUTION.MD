@@ -55,8 +55,6 @@ When submitting a new tool assessment or revising an existing one, you **must** 
    # OR
    git checkout -b fix/matrix-filter-bug
 
-```
-
 3. **Commit Your Changes:** Write concise, descriptive commit messages following Conventional Commits format:
 * `feat: add evaluation for new observability tool`
 * `fix: correct license metadata for Valkey`
@@ -69,9 +67,6 @@ When submitting a new tool assessment or revising an existing one, you **must** 
 * Reference any relevant open issues.
 * Ensure your PR passes all automated status checks.
 
-
-
----
 
 ## ⚖️ Code of Conduct
 
