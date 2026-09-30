@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enterprise Open Source Architecture Matrix & Evaluation Suite (2026)</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              850: '#0f172a',
+              900: '#0a0f1d',
+              950: '#030712'
+            },
+            cyan: {
+              400: '#22d3ee',
+              500: '#06b6d4',
+              600: '#0891b2'
+            },
+            emerald: {
+              400: '#34d399',
+              500: '#10b981'
+            },
+            amber: {
+              400: '#fbbf24',
+              500: '#f59e0b'
+            },
+            rose: {
+              500: '#f43f5e'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #030712;
+      color: #f3f4f6;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card-hover {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card-hover:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
+      transform: translateY(-2px);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #06b6d4;
+    }
+    .terminal-header {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+
+  <header class="sticky top-0 z-40 w-full glass-card border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-violet-600 flex items-center justify-center font-bold text-slate-950 shadow-lg shadow-cyan-500/20">
+          <i data-lucide="layers" class="w-6 h-6 text-slate-950"></i>
+        </div>
+        <div>
+          <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">ARCH-MATRIX</span>
+          <span class="text-xs px-2 py-0.5 ml-2 rounded-full bg-cyan-950 border border-cyan-500/30 text-cyan-400 font-mono">2026 EDITION</span>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+        <a href="#explorer" class="hover:text-cyan-400 transition-colors">Tool Explorer</a>
+        <a href="#estimator" class="hover:text-cyan-400 transition-colors">Stack Estimator</a>
+        <a href="#matrix" class="hover:text-cyan-400 transition-colors">Decision Matrix</a>
+        <a href="#pricing" class="hover:text-cyan-400 transition-colors">Enterprise Pass</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button onclick="scrollToSection('estimator')" class="hidden sm:flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+          <i data-lucide="calculator" class="w-4 h-4 text-cyan-400"></i>
+          <span>TCO Calculator</span>
+        </button>
+        <button onclick="openPurchaseModal('Complete Suite Bundle')" class="flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-md shadow-cyan-500/20 transition-all transform active:scale-95">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Get Architecture Pass</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden border-b border-slate-800/60 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-medium mb-6 backdrop-blur-md">
+          <span class="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span>50 Self-Hosted Tools Audited • 15+ Yrs Enterprise Experience</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-none mb-6">
+          The Enterprise <span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-violet-400 bg-clip-text text-transparent">Open Source</span> Tooling Suite
+        </h1>
+        <p class="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed mb-8">
+          Unbiased, field-tested architectural assessments, TCO scoring, security audits, and data flow topologies for CTOs, Principal Engineers, and SRE Leads.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 mb-12">
+          <button onclick="scrollToSection('explorer')" class="px-6 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-500 via-teal-500 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] transition-all flex items-center gap-2">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+            <span>Explore 50 Assessment Cards</span>
+          </button>
+          <button onclick="scrollToSection('estimator')" class="px-6 py-3.5 rounded-xl font-bold text-sm glass-card border border-slate-700 text-white hover:bg-slate-800 transition-all flex items-center gap-2">
+            <i data-lucide="sliders" class="w-5 h-5 text-cyan-400"></i>
+            <span>Configure Stack TCO</span>
+          </button>
+        </div>
+
+        <!-- Metric Badges -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-6 border-t border-slate-800/80">
+          <div class="p-3 rounded-lg bg-slate-900/50 border border-slate-800">
+            <div class="text-2xl font-black text-cyan-400 font-mono">50 / 50</div>
+            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Tools Audited</div>
+          </div>
+          <div class="p-3 rounded-lg bg-slate-900/50 border border-slate-800">
+            <div class="text-2xl font-black text-emerald-400 font-mono">6 Categories</div>
+            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Core Tech Stack</div>
+          </div>
+          <div class="p-3 rounded-lg bg-slate-900/50 border border-slate-800">
+            <div class="text-2xl font-black text-violet-400 font-mono">100% Zero-BS</div>
+            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Opinionated Verdicts</div>
+          </div>
+          <div class="p-3 rounded-lg bg-slate-900/50 border border-slate-800">
+            <div class="text-2xl font-black text-amber-400 font-mono">2026 Audit</div>
+            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Fresh License Checks</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="estimator" class="py-12 bg-slate-900 border-b border-slate-800/80 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-8">
+        <div class="flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-widest">
+          <i data-lucide="cpu" class="w-4 h-4"></i>
+          <span>Value-Add Interactive Engine</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Enterprise Stack & TCO Estimator</h2>
+        <p class="text-slate-400 text-sm mt-1">Select tools from your enterprise target stack to dynamically calculate estimated monthly infrastructure compute, operational risk, and SRE bandwidth load.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Stack Builder Options -->
+        <div class="lg:col-span-2 glass-card rounded-2xl p-6 border border-slate-800">
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+            <h3 class="font-bold text-slate-200 text-sm uppercase tracking-wide flex items-center gap-2">
+              <i data-lucide="check-square" class="w-4 h-4 text-cyan-400"></i>
+              Select Components Across Categories
+            </h3>
+            <button onclick="resetStackEstimator()" class="text-xs text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-1">
+              <i data-lucide="rotate-ccw" class="w-3 h-3"></i> Reset
+            </button>
+          </div>
+
+          <div id="estimator-categories" class="space-y-5">
+            <!-- Dynamically populated categories with radio/checkboxes -->
+          </div>
+        </div>
+
+        <!-- Calculated Summary Card -->
+        <div class="glass-card rounded-2xl p-6 border border-cyan-500/30 bg-slate-950/80 flex flex-col justify-between sticky top-24 h-fit">
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Stack Analysis Summary</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950 text-cyan-300 border border-cyan-500/30">ESTIMATOR ENGINE</span>
+            </div>
+
+            <div class="mt-6 space-y-6">
+              <div>
+                <div class="text-xs text-slate-400 mb-1">Est. Monthly Cloud Compute (Nodes/Pods)</div>
+                <div class="text-3xl font-black font-mono text-cyan-400 flex items-baseline gap-1">
+                  $<span id="tco-cost">0</span>
+                  <span class="text-xs font-normal text-slate-400">/ mo</span>
+                </div>
+                <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+                  <div id="tco-cost-bar" class="bg-cyan-400 h-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="text-xs text-slate-400 mb-1">SRE Operational Burden Index</div>
+                <div class="text-xl font-bold font-mono text-white flex items-center justify-between">
+                  <span id="tco-burden-text">Minimal</span>
+                  <span id="tco-burden-badge" class="px-2 py-0.5 rounded text-xs font-semibold bg-emerald-950 text-emerald-400 border border-emerald-500/30">LOW</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1" id="tco-burden-desc">Low maintenance overhead; single binaries or lightweight containers.</p>
+              </div>
+
+              <div>
+                <div class="text-xs text-slate-400 mb-1">AGPL / Licensing Copyleft Risk</div>
+                <div class="text-sm font-semibold text-white flex items-center justify-between">
+                  <span id="tco-agpl-count">0 AGPL / BSL Tools</span>
+                  <span id="tco-agpl-status" class="text-emerald-400 text-xs">Safe Pass</span>
+                </div>
+              </div>
+
+              <div>
+                <div class="text-xs text-slate-400 mb-2">Selected Stack (<span id="tco-count">0</span> tools)</div>
+                <div id="tco-selected-tags" class="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto pr-1">
+                  <span class="text-xs text-slate-500 italic">No tools selected yet. Select from the left.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-4 border-t border-slate-800 space-y-3">
+            <button onclick="exportCurrentStackConfig()" class="w-full py-2.5 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="share-2" class="w-4 h-4 text-cyan-400"></i>
+              <span>Export Selected Stack Specification</span>
+            </button>
+            <button onclick="openPurchaseModal('Custom Architecture Blueprint')" class="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-md shadow-cyan-500/20">
+              <i data-lucide="file-check" class="w-4 h-4"></i>
+              <span>Generate Architecture Briefing PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="explorer" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1">
+    
+    <!-- Controls Header -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
+      <div>
+        <div class="flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-widest">
+          <i data-lucide="grid" class="w-4 h-4"></i>
+          <span>Database of 50 Audited Tools</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Architecture Assessment Cards</h2>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative min-w-[280px] lg:min-w-[360px]">
+        <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+        <input 
+          type="text" 
+          id="search-input"
+          placeholder="Search by tool name, keyword, license (e.g., PostgreSQL, AGPL, Go)..." 
+          class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-900 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+          oninput="handleSearchFilter()"
+        />
+        <button id="search-clear" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white text-xs">Clear</button>
+      </div>
+    </div>
+
+    <!-- Filter Buttons Bar -->
+    <div class="space-y-4 mb-8 bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
+      <!-- Category Filter -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider w-24">Category:</span>
+        <button onclick="setCategoryFilter('ALL')" class="cat-btn active px-3 py-1.5 rounded-lg text-xs font-medium bg-cyan-500 text-slate-950 font-semibold transition-all">All (50)</button>
+        <button onclick="setCategoryFilter('A')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all">A: Project Tracking (8)</button>
+        <button onclick="setCategoryFilter('B')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all">B: Docs & Knowledge (8)</button>
+        <button onclick="setCategoryFilter('C')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all">C: CI/CD & DevOps (9)</button>
+        <button onclick="setCategoryFilter('D')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all">D: Observability (9)</button>
+        <button onclick="setCategoryFilter('E')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all">E: Data & API (10)</button>
+        <button onclick="setCategoryFilter('F')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all">F: Security (6)</button>
+      </div>
+
+      <!-- Verdict Filter -->
+      <div class="flex flex-wrap items-center gap-2 border-t border-slate-800/60 pt-3">
+        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider w-24">Verdict:</span>
+        <button onclick="setVerdictFilter('ALL')" class="verdict-btn active px-3 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all">All</button>
+        <button onclick="setVerdictFilter('Strategic Standard')" class="verdict-btn px-3 py-1 rounded-lg text-xs font-medium bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-900 transition-all">Strategic Standard</button>
+        <button onclick="setVerdictFilter('Adopt')" class="verdict-btn px-3 py-1 rounded-lg text-xs font-medium bg-cyan-950/80 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-900 transition-all">Adopt</button>
+        <button onclick="setVerdictFilter('Adopt with Caution')" class="verdict-btn px-3 py-1 rounded-lg text-xs font-medium bg-amber-950/80 text-amber-400 border border-amber-500/30 hover:bg-amber-900 transition-all">Adopt with Caution</button>
+        <button onclick="setVerdictFilter('Avoid')" class="verdict-btn px-3 py-1 rounded-lg text-xs font-medium bg-rose-950/80 text-rose-400 border border-rose-500/30 hover:bg-rose-900 transition-all">Avoid for New</button>
+      </div>
+    </div>
+
+    <!-- Results Counter Bar -->
+    <div class="flex items-center justify-between text-xs text-slate-400 mb-6 px-1">
+      <div>Showing <span id="visible-count" class="font-bold text-cyan-400 font-mono">50</span> of 50 enterprise tools</div>
+      <div class="flex items-center gap-3">
+        <span>Layout:</span>
+        <button onclick="setGridColumns(3)" id="btn-grid-3" class="p-1 rounded bg-slate-800 text-cyan-400"><i data-lucide="grid" class="w-4 h-4"></i></button>
+        <button onclick="setGridColumns(2)" id="btn-grid-2" class="p-1 rounded bg-slate-900 text-slate-500 hover:text-white"><i data-lucide="layout-grid" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+
+    <!-- Tool Grid Cards Container -->
+    <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Dynamically generated via JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="hidden py-16 text-center glass-card rounded-2xl border border-slate-800">
+      <i data-lucide="search-x" class="w-12 h-12 text-slate-600 mx-auto mb-3"></i>
+      <h3 class="text-lg font-bold text-white">No tools match your criteria</h3>
+      <p class="text-slate-400 text-sm mt-1">Try resetting search filters or switching categories.</p>
+      <button onclick="resetAllFilters()" class="mt-4 px-4 py-2 text-xs font-bold bg-cyan-500 text-slate-950 rounded-lg">Reset Filters</button>
+    </div>
+  </section>
+
+  <section id="matrix" class="py-12 bg-slate-950 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-widest">
+            <i data-lucide="table" class="w-4 h-4"></i>
+            <span>Executive Overview</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Full 50-Tool Decision Matrix Table</h2>
+        </div>
+        <button onclick="exportMatrixCSV()" class="flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl glass-card border border-slate-700 text-slate-200 hover:text-white hover:border-cyan-500/50 transition-all">
+          <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-400"></i>
+          <span>Export CSV Matrix</span>
+        </button>
+      </div>
+
+      <!-- Matrix Table Container -->
+      <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden shadow-2xl">
+        <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="bg-slate-900/90 text-slate-300 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-800 backdrop-blur-md">
+              <tr>
+                <th class="py-3.5 px-4">#</th>
+                <th class="py-3.5 px-4">Tool Name</th>
+                <th class="py-3.5 px-4">Category</th>
+                <th class="py-3.5 px-4">License</th>
+                <th class="py-3.5 px-4">Primary Use Case</th>
+                <th class="py-3.5 px-4">Verdict</th>
+                <th class="py-3.5 px-4">Operational Burden</th>
+                <th class="py-3.5 px-4 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="matrix-table-body" class="divide-y divide-slate-800/60 font-medium text-slate-300">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="py-16 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-950 border border-cyan-500/30">Digital Product Bundles</span>
+        <h2 class="text-3xl font-extrabold text-white mt-3">Unlock Enterprise Architecture Assets</h2>
+        <p class="text-slate-400 text-sm mt-2">Get instant access to full Markdown raw documentation, production Terraform/Helm blueprints, and board-ready executive briefings.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Tier 1 -->
+        <div class="glass-card rounded-2xl p-6 border border-slate-800 flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Starter Architect Pass</div>
+            <div class="text-2xl font-extrabold text-white mt-2">$49 <span class="text-xs text-slate-400 font-normal">one-time</span></div>
+            <p class="text-xs text-slate-400 mt-2">Ideal for individual Staff Engineers and Tech Leads evaluating new tools.</p>
+            <ul class="mt-6 space-y-3 text-xs text-slate-300">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400"></i> Full 50 Tool Markdown Assessment Repo</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400"></i> CSV & JSON Decision Matrix Datasets</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400"></i> Lifetime Web Suite Access & Updates</li>
+            </ul>
+          </div>
+          <button onclick="openPurchaseModal('Starter Architect Pass ($49)')" class="mt-8 w-full py-2.5 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+            Get Starter Bundle
+          </button>
+        </div>
+
+        <!-- Tier 2 (Highlighted) -->
+        <div class="glass-card rounded-2xl p-6 border-2 border-cyan-500 bg-slate-900/90 relative flex flex-col justify-between glow-cyan">
+          <div class="absolute -top-3 right-6 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black text-[10px] uppercase tracking-widest px-3 py-0.5 rounded-full shadow-md">
+            MOST POPULAR
+          </div>
+          <div>
+            <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Principal Architecture Suite</div>
+            <div class="text-3xl font-extrabold text-white mt-2">$149 <span class="text-xs text-slate-400 font-normal">one-time</span></div>
+            <p class="text-xs text-slate-300 mt-2">Complete toolkit with infrastructure blueprints for fast deployment.</p>
+            <ul class="mt-6 space-y-3 text-xs text-slate-200">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Everything in Starter Pass</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Terraform & Helm Deployment Blueprints</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Executive Briefing Slide Deck (PPTX/PDF)</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Interactive TCO Cost Estimator Pro</li>
+            </ul>
+          </div>
+          <button onclick="openPurchaseModal('Principal Architecture Suite ($149)')" class="mt-8 w-full py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 hover:opacity-95 transition-opacity shadow-lg shadow-cyan-500/25">
+            Get Complete Suite
+          </button>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="glass-card rounded-2xl p-6 border border-slate-800 flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Enterprise Advisory License</div>
+            <div class="text-2xl font-extrabold text-white mt-2">$499 <span class="text-xs text-slate-400 font-normal">one-time</span></div>
+            <p class="text-xs text-slate-400 mt-2">For enterprise leadership teams requiring consultation and custom audits.</p>
+            <ul class="mt-6 space-y-3 text-xs text-slate-300">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-violet-400"></i> Full Team Redistribution License</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-violet-400"></i> 1-on-1 Architecture Advisory Call (60 min)</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-violet-400"></i> Custom Tool Risk Audit Review</li>
+            </ul>
+          </div>
+          <button onclick="openPurchaseModal('Enterprise Advisory License ($499)')" class="mt-8 w-full py-2.5 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+            Contact Architecture Advisory
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="detail-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl border border-slate-700 bg-slate-900 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col">
+      <!-- Modal Header -->
+      <div class="sticky top-0 z-20 bg-slate-900/95 border-b border-slate-800 p-6 flex items-start justify-between backdrop-blur-md">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span id="modal-category" class="px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-slate-800 text-cyan-400 border border-slate-700">Category</span>
+            <span id="modal-license" class="px-2.5 py-0.5 rounded text-[11px] font-mono bg-slate-800 text-slate-300 border border-slate-700">License</span>
+          </div>
+          <h2 id="modal-title" class="text-2xl font-black text-white">Tool Name</h2>
+        </div>
+        <button onclick="closeModal()" class="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 space-y-6 text-sm text-slate-300">
+        <!-- Verdict Banner -->
+        <div id="modal-verdict-box" class="p-4 rounded-xl border flex items-center gap-4">
+          <div id="modal-verdict-icon" class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"></div>
+          <div>
+            <div class="text-xs uppercase tracking-wider font-bold text-slate-400">Enterprise Architect Verdict</div>
+            <div id="modal-verdict-text" class="text-base font-bold text-white">Verdict Title</div>
+          </div>
+        </div>
+
+        <!-- Deployment & Architecture -->
+        <div class="space-y-2">
+          <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+            <i data-lucide="server" class="w-4 h-4"></i> Deployment & Architecture
+          </h3>
+          <p id="modal-deploy" class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 leading-relaxed text-slate-300">Details</p>
+        </div>
+
+        <!-- Core Capabilities & Limits -->
+        <div class="space-y-2">
+          <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Core Capabilities & Limits
+          </h3>
+          <p id="modal-capabilities" class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 leading-relaxed text-slate-300">Details</p>
+        </div>
+
+        <!-- Grid: TCO & Security -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+              <i data-lucide="dollar-sign" class="w-4 h-4"></i> TCO & Operational Overhead
+            </h3>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 h-full">
+              <div id="modal-tco-badge" class="font-bold text-sm mb-2">High / Medium / Low</div>
+              <p id="modal-tco" class="text-xs text-slate-400 leading-relaxed">Details</p>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-4 h-4"></i> Security & Compliance
+            </h3>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 h-full">
+              <p id="modal-security" class="text-xs text-slate-300 leading-relaxed">Details</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal Architecture Diagram -->
+        <div class="space-y-2">
+          <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+            <i data-lucide="workflow" class="w-4 h-4"></i> Data Flow Topology
+          </h3>
+          <div class="rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
+            <div class="terminal-header px-4 py-2 flex items-center gap-2 text-xs font-mono text-slate-400">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <span class="ml-2">architecture-topology.d2</span>
+            </div>
+            <pre id="modal-diagram" class="p-4 font-mono text-xs text-cyan-300 overflow-x-auto leading-relaxed">Diagram</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 bg-slate-950 border-t border-slate-800 flex justify-between items-center">
+        <button onclick="toggleToolInEstimatorFromModal()" id="modal-toggle-stack-btn" class="px-4 py-2 text-xs font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors flex items-center gap-2">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          <span>Add to TCO Estimator</span>
+        </button>
+        <button onclick="closeModal()" class="px-5 py-2 text-xs font-bold rounded-lg bg-cyan-500 text-slate-950 hover:bg-cyan-400 transition-colors">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="purchase-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl border border-cyan-500/40 bg-slate-900 max-w-md w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2 text-cyan-400 font-bold text-sm">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span>Checkout Digital Product</span>
+        </div>
+        <button onclick="closePurchaseModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="mt-4">
+        <div class="text-xs text-slate-400 uppercase font-semibold">Selected Asset</div>
+        <div id="purchase-item-name" class="text-lg font-bold text-white mt-0.5">Principal Architecture Suite</div>
+
+        <form onsubmit="handleSimulatedCheckout(event)" class="mt-6 space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">Work Email</label>
+            <input type="email" required placeholder="cto@enterprise.com" class="w-full px-3.5 py-2 text-sm bg-slate-950 border border-slate-800 rounded-lg text-white focus:outline-none focus:border-cyan-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">Organization Name</label>
+            <input type="text" required placeholder="Acme Financial Tech" class="w-full px-3.5 py-2 text-sm bg-slate-950 border border-slate-800 rounded-lg text-white focus:outline-none focus:border-cyan-500" />
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-400 flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+            <span>Instant delivery of Markdown files, Helm charts & PDF briefing download link.</span>
+          </div>
+
+          <button type="submit" class="w-full py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 hover:opacity-95 transition-opacity shadow-lg shadow-cyan-500/20">
+            Complete Digital Purchase
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-notification" class="fixed bottom-6 right-6 z-50 glass-card border border-cyan-500/40 px-4 py-3 rounded-xl text-xs font-bold text-white shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></div>
+    <span id="toast-message">Notification Message</span>
+  </div>
+
+  <footer class="bg-slate-950 border-t border-slate-800/80 py-12 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+        </div>
+        <span class="font-bold text-slate-300">Enterprise Open Source Architecture Matrix © 2026</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="#explorer" class="hover:text-slate-300">Tools Catalog</a>
+        <a href="#estimator" class="hover:text-slate-300">TCO Engine</a>
+        <a href="#matrix" class="hover:text-slate-300">Decision Table</a>
+        <a href="#pricing" class="hover:text-slate-300 font-bold text-cyan-400">Digital Product Bundles</a>
+      </div>
+      <div>Designed for CTOs, Principal Architects & SRE Leaders.</div>
+    </div>
+  </footer>
+
+  <script>
+    /* ==========================================================================
+       COMPLETE 50 TOOL DATASET ACROSS CATEGORIES A - F
+       ========================================================================== */
+    const TOOLS_DATA = [
+      // Category A
+      {
+        id: 1,
+        code: "openproject",
+        name: "OpenProject",
+        cat: "A",
+        catName: "Project Mgmt",
+        license: "GPLv3",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR HEAVY PPM ONLY.",
+        burden: "High",
+        costMo: 180,
+        useCase: "Heavy Project/Portfolio Mgmt",
+        deploy: "Monolithic Ruby on Rails application requiring PostgreSQL and Memcached. Enterprise multi-node HA deployments require complex Puma cluster configurations and background workers.",
+        capabilities: "Comprehensive PPM suite (Gantt, Agile, Work Packages, EVM, Budgeting). Highly rigid workflows; legacy UI feel for fast engineering teams.",
+        tco: "High. Significant operational burden during major schema migrations. Requires substantial compute infrastructure.",
+        security: "Mature security program. Strong RBAC, GDPR compliant. SAML SSO locked behind Enterprise Edition.",
+        diagram: "[User Browser] ---> [Nginx Ingress]\n                      |\n             [OpenProject Rails]\n            /        |        \\\n     [PostgreSQL] [Memcached] [Delayed::Job]"
+      },
+      {
+        id: 2,
+        code: "plane",
+        name: "Plane",
+        cat: "A",
+        catName: "Project Mgmt",
+        license: "AGPLv3",
+        verdict: "Adopt with Caution",
+        verdictDetail: "RECOMMENDED WITH CAUTION (Modern Jira Alt).",
+        burden: "Medium",
+        costMo: 95,
+        useCase: "Agile Software Development",
+        deploy: "Modern microservices architecture (Django API, Next.js frontend, PostgreSQL, Redis, RabbitMQ/Celery, S3 storage). Clean Docker/K8s deployment.",
+        capabilities: "Modern, fast Jira/Linear alternative. Supports Issues, Cycles, Modules, and Pages. Fast-moving codebase.",
+        tco: "Medium. Moderate compute footprint; state distributed across Postgres, Redis, and MinIO requires backup orchestration.",
+        security: "AGPLv3 copyleft considerations. Native OIDC/OAuth2 support; enterprise SSO tied to commercial tiers.",
+        diagram: "[Browser] ---> [Ingress Router]\n                     |\n            [Next.js Frontend]\n                     |\n             [Django REST API]\n            /        |        \\\n     [Postgres]   [Redis]    [S3 Storage]"
+      },
+      {
+        id: 3,
+        code: "taiga",
+        name: "Taiga",
+        cat: "A",
+        catName: "Project Mgmt",
+        license: "MPL-2.0",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR AGILE TEAMS.",
+        burden: "Low",
+        costMo: 45,
+        useCase: "Pure Scrum/Kanban Teams",
+        deploy: "Django backend, Angular frontend, PostgreSQL, Redis, and Celery async workers.",
+        capabilities: "Excellent Scrum/Kanban platform. Highly intuitive UI. Lacks complex enterprise portfolio financials.",
+        tco: "Low to Medium. Lightweight resource footprint; permissive MPL-2.0 license is enterprise friendly.",
+        security: "Permissive MPL-2.0. Standard RBAC. Lacks native SAML out of box (requires community plugin or proxy auth).",
+        diagram: "[Client Browser] ---> [Taiga Front]\n                           |\n                    [Taiga Back (Django)]\n                   /          |         \\\n            [Postgres]     [Redis]    [Celery Workers]"
+      },
+      {
+        id: 4,
+        code: "redmine",
+        name: "Redmine",
+        cat: "A",
+        catName: "Project Mgmt",
+        license: "GPLv2",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR COST-SENSITIVE/LEGACY OPS.",
+        burden: "Low",
+        costMo: 30,
+        useCase: "Low-resource Issue Tracking",
+        deploy: "Monolithic Ruby on Rails app with PostgreSQL or MySQL/MariaDB.",
+        capabilities: "Battle-tested issue tracking. Highly extensible via plugins. Dated UI requires modern themes.",
+        tco: "Low. Extremely efficient on hardware. Minimal maintenance once configured.",
+        security: "Stellar security track record due to code maturity. Strict role permissions.",
+        diagram: "[User] ---> [Puma/Unicorn] ---> [Redmine Rails App] ---> [PostgreSQL]"
+      },
+      {
+        id: 5,
+        code: "leantime",
+        name: "Leantime",
+        cat: "A",
+        catName: "Project Mgmt",
+        license: "AGPLv3",
+        verdict: "Avoid",
+        verdictDetail: "NOT RECOMMENDED FOR CORE ENGINEERING.",
+        burden: "Low",
+        costMo: 40,
+        useCase: "Strategy & Product Ideation",
+        deploy: "PHP/Laravel backend, MySQL/MariaDB, and Redis LEMP stack.",
+        capabilities: "Geared for product managers & strategy boards. Lacks deep dev-tooling integrations.",
+        tco: "Low. Standard PHP deployment model.",
+        security: "AGPLv3 copyleft considerations. Enterprise SSO gated under commercial tiers.",
+        diagram: "[Browser] ---> [Nginx] ---> [Leantime PHP-FPM] ---> [MySQL/Redis]"
+      },
+      {
+        id: 6,
+        code: "vikunja",
+        name: "Vikunja",
+        cat: "A",
+        catName: "Project Mgmt",
+        license: "AGPLv3",
+        verdict: "Avoid",
+        verdictDetail: "NOT RECOMMENDED FOR ENTERPRISE PPM.",
+        burden: "Ultra-Low",
+        costMo: 15,
+        useCase: "Task Management",
+        deploy: "Single-binary Go backend with Vue.js frontend backed by PostgreSQL, MySQL, or SQLite.",
+        capabilities: "Minimalist task manager (Todoist alt). Fast, but lacks enterprise governance.",
+        tco: "Ultra-Low. <100 MB RAM usage. Single binary simplicity.",
+        security: "Go memory safety. OpenID Connect (OIDC) supported natively.",
+        diagram: "[Client] ---> [Vikunja Go Binary] ---> [PostgreSQL / SQLite]"
+      },
+      {
+        id: 7,
+        code: "tuleap",
+        name: "Tuleap",
+        cat: "A",
+        catName: "Project Mgmt",
+        license: "GPLv3",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR REGULATED ALM ONLY.",
+        burden: "High",
+        costMo: 220,
+        useCase: "Regulated ALM Engineering",
+        deploy: "Monolithic PHP and Vue.js running on RHEL/Rocky Linux with MySQL/MariaDB.",
+        capabilities: "Full Application Lifecycle Management for medical/automotive (ISO 26262 compliance).",
+        tco: "High. Heavy OS dependencies and complex upgrade paths require ALM team bandwidth.",
+        security: "Built for compliance. Fine-grained RBAC and audit trails.",
+        diagram: "[Engineer] ---> [Tuleap Monolith] ---> [MySQL DB] + [Git/SVN Storage]"
+      },
+      {
+        id: 8,
+        code: "kanboard",
+        name: "Kanboard",
+        cat: "A",
+        catName: "Project Mgmt",
+        license: "MIT",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR LIGHTWEIGHT KANBAN.",
+        burden: "Ultra-Low",
+        costMo: 10,
+        useCase: "Lightweight Visual Kanban",
+        deploy: "Lightweight PHP application with zero external dependencies when run with SQLite.",
+        capabilities: "Visual, pure Kanban board app. Intentionally simple and reliable.",
+        tco: "Ultra-Low. Near-zero maintenance cost. Runs anywhere.",
+        security: "Permissive MIT license. Simple security model with LDAP support.",
+        diagram: "[User] ---> [Kanboard PHP] ---> [SQLite File]"
+      },
+
+      // Category B
+      {
+        id: 9,
+        code: "bookstack",
+        name: "BookStack",
+        cat: "B",
+        catName: "Docs & Knowledge",
+        license: "MIT",
+        verdict: "Strategic Standard",
+        verdictDetail: "RECOMMENDED (BEST GENERAL KNOWLEDGE BASE).",
+        burden: "Ultra-Low",
+        costMo: 25,
+        useCase: "Enterprise IT Documentation",
+        deploy: "PHP (Laravel) monolith using MySQL/MariaDB and optional Redis.",
+        capabilities: "Intuitive Shelves -> Books -> Chapters -> Pages hierarchy. Great WYSIWYG/Markdown editor.",
+        tco: "Ultra-Low. Simple, reliable upgrade path.",
+        security: "MIT license. Native SAML 2.0, OIDC, Azure AD, and LDAP out of box without paywalls.",
+        diagram: "[User] ---> [Nginx] ---> [BookStack Laravel] ---> [MySQL Database]"
+      },
+      {
+        id: 10,
+        code: "outline",
+        name: "Outline",
+        cat: "B",
+        catName: "Docs & Knowledge",
+        license: "BSL 1.1",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR MODERN ENGINEERING TEAMS.",
+        burden: "Medium",
+        costMo: 80,
+        useCase: "Modern Wiki / Notion Alt",
+        deploy: "Node.js/React application requiring PostgreSQL, Redis, and S3-compatible storage.",
+        capabilities: "Polished Notion-like UI. Real-time collaborative block editor.",
+        tco: "Medium. Requires managed Postgres, Redis, and S3 services.",
+        security: "Mandatory external identity provider (OIDC/OAuth2). BSL 1.1 license converts after 4 yrs.",
+        diagram: "[Browser] ---> [Outline Node.js] ---> [Postgres] + [Redis] + [S3 Object Store]"
+      },
+      {
+        id: 11,
+        code: "wikijs",
+        name: "Wiki.js",
+        cat: "B",
+        catName: "Docs & Knowledge",
+        license: "AGPLv3",
+        verdict: "Adopt with Caution",
+        verdictDetail: "RECOMMENDED WITH RESERVATIONS.",
+        burden: "Low",
+        costMo: 35,
+        useCase: "Git-Integrated Tech Docs",
+        deploy: "Node.js application running on PostgreSQL with optional Git sync.",
+        capabilities: "Multiple editor options (Markdown, WYSIWYG). Slow v2 to v3 release cycle.",
+        tco: "Low. Single Node process plus Postgres.",
+        security: "Comprehensive auth suite (SAML, OIDC, LDAP). AGPLv3 copyleft.",
+        diagram: "[User] ---> [Wiki.js Engine] ---> [PostgreSQL] <---> [Git Remote Repo]"
+      },
+      {
+        id: 12,
+        code: "docmost",
+        name: "Docmost",
+        cat: "B",
+        catName: "Docs & Knowledge",
+        license: "AGPLv3",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR COLLABORATIVE WIKIS.",
+        burden: "Medium",
+        costMo: 60,
+        useCase: "Real-time Collaborative Wiki",
+        deploy: "Node.js/NestJS application with PostgreSQL and Redis (for real-time CRDTs).",
+        capabilities: "Modern Confluence alternative with real-time collaborative editing and Excalidraw.",
+        tco: "Low to Medium. Container deployment is predictable.",
+        security: "AGPLv3. Enterprise SSO gated behind paid tiers.",
+        diagram: "[User Browsers] <---> [Docmost NestJS WebSocket Engine] ---> [Postgres] + [Redis]"
+      },
+      {
+        id: 13,
+        code: "dokuwiki",
+        name: "DokuWiki",
+        cat: "B",
+        catName: "Docs & Knowledge",
+        license: "GPLv2",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR AIR-GAPPED OR MINIMALIST OPS.",
+        burden: "Ultra-Low",
+        costMo: 10,
+        useCase: "Air-gapped / Flat-file Docs",
+        deploy: "PHP application storing data directly in plain text files (no DB required).",
+        capabilities: "Thousands of plugins. Plain-text backing eliminates DB corruption risk.",
+        tco: "Ultra-Low. Backups are standard directory rsyncs.",
+        security: "Mature baseline. LDAP/Active Directory support via plugins.",
+        diagram: "[User] ---> [DokuWiki Engine] ---> [Local File System (.txt files)]"
+      },
+      {
+        id: 14,
+        code: "xwiki",
+        name: "XWiki",
+        cat: "B",
+        catName: "Docs & Knowledge",
+        license: "LGPL-2.1",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR LARGE CONFLUENCE MIGRATIONS.",
+        burden: "High",
+        costMo: 150,
+        useCase: "Heavy Enterprise Wiki",
+        deploy: "Enterprise Java application (Tomcat/Jetty) backed by PostgreSQL/MySQL/Oracle.",
+        capabilities: "Powerful enterprise wiki with Groovy/Velocity scripting and Confluence migration tools.",
+        tco: "High. JVM resource management and extension governance needed.",
+        security: "Granular RBAC, SAML/OIDC/LDAP integration. LGPL license.",
+        diagram: "[Client] ---> [Tomcat / XWiki Java Engine] ---> [PostgreSQL / Oracle DB]"
+      },
+      {
+        id: 15,
+        code: "mediawiki",
+        name: "MediaWiki",
+        cat: "B",
+        catName: "Docs & Knowledge",
+        license: "GPL-1.0",
+        verdict: "Avoid",
+        verdictDetail: "NOT RECOMMENDED FOR INTERNAL CORPORATE WIKIS.",
+        burden: "High",
+        costMo: 140,
+        useCase: "Public Knowledge Bases",
+        deploy: "PHP monolith requiring MySQL/MariaDB or Postgres with optional Varnish/Elasticsearch.",
+        capabilities: "Powers Wikipedia. Scales to millions of pages. Clunky corporate team workflow.",
+        tco: "High. Complex configuration and Wikitext syntax friction.",
+        security: "Field-tested security model.",
+        diagram: "[Browser] ---> [Varnish Proxy] ---> [MediaWiki PHP] ---> [MySQL + Elasticsearch]"
+      },
+      {
+        id: 16,
+        code: "typemill",
+        name: "Typemill",
+        cat: "B",
+        catName: "Docs & Knowledge",
+        license: "MIT",
+        verdict: "Avoid",
+        verdictDetail: "NOT RECOMMENDED FOR TEAM WIKIS.",
+        burden: "Ultra-Low",
+        costMo: 10,
+        useCase: "Manual & Ebook Publishing",
+        deploy: "Flat-file PHP CMS platform using Vue.js. No SQL database.",
+        capabilities: "Tailored for visual user manuals and technical ebooks. Lacks team collaboration.",
+        tco: "Ultra-Low. Simple file-system operations.",
+        security: "MIT license. Basic RBAC.",
+        diagram: "[Publisher] ---> [Typemill PHP] ---> [Flat Markdown Files]"
+      },
+
+      // Category C
+      {
+        id: 17,
+        code: "jenkins",
+        name: "Jenkins",
+        cat: "C",
+        catName: "CI/CD & DevOps",
+        license: "MIT",
+        verdict: "Avoid",
+        verdictDetail: "LEGACY STANDARD / AVOID FOR NEW STACKS.",
+        burden: "High",
+        costMo: 200,
+        useCase: "Legacy Pipeline Automation",
+        deploy: "Java controller/agent architecture. Storage bound to JENKINS_HOME file system.",
+        capabilities: "Infinite plugin flexibility. High tech debt, fragile plugin trees, pipeline drift.",
+        tco: "High. Requires dedicated SRE bandwidth for plugin hygiene and patching.",
+        security: "High attack surface. Requires aggressive patching schedules.",
+        diagram: "[Git Event] ---> [Jenkins Controller (Java)] ---> [Agent Pool Nodes] ---> [Artifacts]"
+      },
+      {
+        id: 18,
+        code: "gitlab-ce",
+        name: "GitLab CE",
+        cat: "C",
+        catName: "CI/CD & DevOps",
+        license: "MIT",
+        verdict: "Strategic Standard",
+        verdictDetail: "RECOMMENDED (GOLD STANDARD FOR INTEGRATED DEVOPS).",
+        burden: "High",
+        costMo: 320,
+        useCase: "Complete DevOps Platform",
+        deploy: "Complex multi-component architecture (Rails, Go, Gitaly, PostgreSQL, Redis, Runners).",
+        capabilities: "All-in-one SCM, CI/CD, Registry, and Security scanning platform.",
+        tco: "High. Compute heavy (min 4 vCPU / 8 GB RAM). Clean MIT open source core.",
+        security: "Strong patching cadence. MIT license.",
+        diagram: "[Developer] ---> [GitLab Workhorse] ---> [Rails / Gitaly] ---> [Postgres]\n                                            |\n                                  [GitLab Runner Pods]"
+      },
+      {
+        id: 19,
+        code: "argocd",
+        name: "Argo CD",
+        cat: "C",
+        catName: "CI/CD & DevOps",
+        license: "Apache-2.0",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY FOR KUBERNETES CD.",
+        burden: "Low",
+        costMo: 60,
+        useCase: "Kubernetes GitOps CD",
+        deploy: "Kubernetes-native controller suite running CRDs directly inside K8s.",
+        capabilities: "Unrivaled GitOps continuous delivery for K8s. Drift detection and automated sync.",
+        tco: "Low to Medium. Operating cost is minimal if K8s ops are mature.",
+        security: "CNCF Graduated. Fine-grained RBAC, OIDC/SSO support.",
+        diagram: "[Git Repo] <--- [Argo CD Repo Server]\n                       |\n               [Argo CD Application Controller] ---> [Kubernetes API Sync]"
+      },
+      {
+        id: 20,
+        code: "drone",
+        name: "Drone CI",
+        cat: "C",
+        catName: "CI/CD & DevOps",
+        license: "Apache-2.0",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR SIMPLE CONTAINER CI.",
+        burden: "Low",
+        costMo: 45,
+        useCase: "Containerized CI Pipelines",
+        deploy: "Lightweight Go binary server with Docker/K8s execution runners.",
+        capabilities: "Fast YAML-based pipelines running in isolated Docker containers.",
+        tco: "Low. Single binary server setup; low compute footprint.",
+        security: "Isolated build containers. Apache-2.0 core.",
+        diagram: "[Webhook] ---> [Drone Server (Go)] ---> [Docker Runner Engine] ---> [Build Pod]"
+      },
+      {
+        id: 21,
+        code: "tekton",
+        name: "Tekton",
+        cat: "C",
+        catName: "CI/CD & DevOps",
+        license: "Apache-2.0",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR PLATFORM ENGINEERING ONLY.",
+        burden: "High",
+        costMo: 110,
+        useCase: "K8s Platform Construction",
+        deploy: "Kubernetes-native framework defined via CRDs (Pipelines, Tasks, Runs).",
+        capabilities: "Building blocks for custom Developer Platforms (IDPs). Verbose YAML.",
+        tco: "High. Significant engineering effort required to build user abstractions.",
+        security: "CNCF Graduated. Excellent RBAC and supply chain attestation (Tekton Chains).",
+        diagram: "[K8s API] ---> [Tekton Controller] ---> [TaskRun Pods] ---> [In-toto Attestation]"
+      },
+      {
+        id: 22,
+        code: "gitea",
+        name: "Gitea",
+        cat: "C",
+        catName: "CI/CD & DevOps",
+        license: "MIT",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR LIGHTWEIGHT SCM/CI.",
+        burden: "Ultra-Low",
+        costMo: 20,
+        useCase: "Lightweight Git & Actions",
+        deploy: "Single Go binary with built-in SQLite/PostgreSQL/MySQL support.",
+        capabilities: "Lightweight GitHub clone with Gitea Actions (GitHub Actions compatible).",
+        tco: "Ultra-Low. Memory usage <200 MB RAM. Trivial updates.",
+        security: "Permissive MIT license. Native SSH/GPG key checks, OIDC/SAML.",
+        diagram: "[Developer] ---> [Gitea Single Go Binary] ---> [PostgreSQL / Disk Store]"
+      },
+      {
+        id: 23,
+        code: "woodpecker",
+        name: "Woodpecker CI",
+        cat: "C",
+        catName: "CI/CD & DevOps",
+        license: "AGPLv3",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR COMMUNITY CONTAINER CI.",
+        burden: "Low",
+        costMo: 40,
+        useCase: "Community Container CI",
+        deploy: "Community fork of Drone. Go server and agent execution containers.",
+        capabilities: "Open community governance. Container-isolated build execution.",
+        tco: "Low. Minimal infrastructure cost.",
+        security: "AGPLv3 license. Isolated docker socket pipeline steps.",
+        diagram: "[Git Webhook] ---> [Woodpecker Server] ---> [Agent Node (Docker Engine)]"
+      },
+      {
+        id: 24,
+        code: "concourse",
+        name: "Concourse CI",
+        cat: "C",
+        catName: "CI/CD & DevOps",
+        license: "Apache-2.0",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR INFRASTRUCTURE AUTOMATION.",
+        burden: "Medium",
+        costMo: 130,
+        useCase: "Infrastructure Pipelines",
+        deploy: "Stateless web nodes, worker nodes running Garden containers, and Postgres.",
+        capabilities: "Everything is a deterministic data-flow graph. High learning curve.",
+        tco: "Medium to High. Worker storage management requires platform expertise.",
+        security: "Exceptional job isolation. Vault / CyberArk secrets integrations.",
+        diagram: "[Fly CLI / Git] ---> [Concourse Web] ---> [Worker Containers (BTRFS/Garden)]"
+      },
+      {
+        id: 25,
+        code: "gocd",
+        name: "GoCD",
+        cat: "C",
+        catName: "CI/CD & DevOps",
+        license: "Apache-2.0",
+        verdict: "Avoid",
+        verdictDetail: "NOT RECOMMENDED FOR NEW DEPLOYMENTS.",
+        burden: "High",
+        costMo: 160,
+        useCase: "Continuous Delivery",
+        deploy: "Java Server and Agent architecture with PostgreSQL.",
+        capabilities: "Value Stream Mapping specialization. Overtaken by modern GitOps tools.",
+        tco: "High. Upgrades and JVM footprint impose higher costs.",
+        security: "Comprehensive RBAC and audit tracking via plugins.",
+        diagram: "[GoCD Server (JVM)] ---> [Postgres DB] + [GoCD Agents]"
+      },
+
+      // Category D
+      {
+        id: 26,
+        code: "grafana",
+        name: "Grafana",
+        cat: "D",
+        catName: "Observability",
+        license: "AGPLv3",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY INDUSTRY STANDARD.",
+        burden: "Low",
+        costMo: 50,
+        useCase: "Multi-source Dashboards",
+        deploy: "Go binary backend with React frontend. Stateless proxy query engine.",
+        capabilities: "Industry standard for visualization, dashboards, and alerting across TSDBs.",
+        tco: "Low. Trivial to operate dashboard engine itself.",
+        security: "AGPLv3 license. Enterprise SSO (SAML/OIDC/LDAP) built-in.",
+        diagram: "[User Browser] ---> [Grafana Server] ---> [Prometheus / Loki / ClickHouse Data Sources]"
+      },
+      {
+        id: 27,
+        code: "prometheus",
+        name: "Prometheus",
+        cat: "D",
+        catName: "Observability",
+        license: "Apache-2.0",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY CLOUD-NATIVE STANDARD.",
+        burden: "Medium",
+        costMo: 110,
+        useCase: "K8s Metrics & Alerting",
+        deploy: "Go binary utilizing append-only local TSDB engine. Pull-based scraper.",
+        capabilities: "Standard for K8s metric collection (PromQL). Short-term retention focused.",
+        tco: "Low to Medium. Memory sizing requires SRE planning under high cardinality.",
+        security: "CNCF Graduated. TLS/Auth proxies required.",
+        diagram: "[Metrics Endpoints] <--- [Prometheus Scraper] ---> [Alertmanager] + [Local TSDB Disk]"
+      },
+      {
+        id: 28,
+        code: "loki",
+        name: "Loki",
+        cat: "D",
+        catName: "Observability",
+        license: "AGPLv3",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR CLOUD-NATIVE LOGGING.",
+        burden: "Medium",
+        costMo: 90,
+        useCase: "Object-Storage Log Ingest",
+        deploy: "Go-based horizontally scalable log aggregator backed by S3/MinIO object storage.",
+        capabilities: "Indexes metadata labels rather than full text. High compression, low cost.",
+        tco: "Low to Medium. Drastically cuts storage cost compared to Elasticsearch.",
+        security: "AGPLv3 license. Multi-tenancy header propagation.",
+        diagram: "[Promtail / Vector] ---> [Loki Distributor] ---> [Ingester] ---> [S3 / MinIO Storage]"
+      },
+      {
+        id: 29,
+        code: "netdata",
+        name: "Netdata",
+        cat: "D",
+        catName: "Observability",
+        license: "AGPLv3",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR EDGE & REAL-TIME TRIAGE.",
+        burden: "Low",
+        costMo: 20,
+        useCase: "Edge & Host Diagnostics",
+        deploy: "C-based high-performance edge monitoring agent using local dbengine.",
+        capabilities: "Zero-config real-time sub-second metrics (>2,000 auto-detected metrics).",
+        tco: "Low. ~1% CPU overhead per host.",
+        security: "AGPLv3 license. Runs local dashboard endpoints.",
+        diagram: "[Host OS / Kernel] ---> [Netdata C-Daemon] ---> [Realtime In-Memory Stream UI]"
+      },
+      {
+        id: 30,
+        code: "signoz",
+        name: "SigNoz",
+        cat: "D",
+        catName: "Observability",
+        license: "MIT",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED (BEST DATADOG ALTERNATIVE).",
+        burden: "Medium",
+        costMo: 140,
+        useCase: "OpenTelemetry APM Suite",
+        deploy: "OpenTelemetry-native APM platform (Go/React) backed by ClickHouse DB.",
+        capabilities: "Datadog alternative for logs, metrics, and traces under one roof.",
+        tco: "Medium. Operational cost centers on ClickHouse cluster management.",
+        security: "Permissive MIT core. Granular RBAC and SAML/OIDC SSO.",
+        diagram: "[OTel Collector] ---> [SigNoz Query Engine] ---> [ClickHouse Columnar DB]"
+      },
+      {
+        id: 31,
+        code: "jaeger",
+        name: "Jaeger",
+        cat: "D",
+        catName: "Observability",
+        license: "Apache-2.0",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR STANDALONE TRACING.",
+        burden: "Medium",
+        costMo: 85,
+        useCase: "Distributed Tracing",
+        deploy: "Go distributed tracing collector backed by OpenSearch or Cassandra.",
+        capabilities: "End-to-end distributed transaction tracing and dependency graph analysis.",
+        tco: "Low to Medium. Depends on the scale of backing search database.",
+        security: "CNCF Graduated. Standard ingress auth proxy integration.",
+        diagram: "[App App Spans] ---> [Jaeger Collector] ---> [OpenSearch / Cassandra Store]"
+      },
+      {
+        id: 32,
+        code: "openobserve",
+        name: "OpenObserve",
+        cat: "D",
+        catName: "Observability",
+        license: "AGPLv3",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR HIGH-VOLUME COST OPTIMIZATION.",
+        burden: "Low",
+        costMo: 45,
+        useCase: "High-Volume Telemetry",
+        deploy: "Rust-based single-binary or K8s deployment backed by S3 and Parquet files.",
+        capabilities: "140x compression ratios. Blazing query performance via Rust engine.",
+        tco: "Low. S3-backed storage slashes cloud infrastructure bills.",
+        security: "AGPLv3 license. Basic RBAC and identity provider support.",
+        diagram: "[Logs/Traces Ingest] ---> [OpenObserve Rust Engine] ---> [Parquet Files on S3]"
+      },
+      {
+        id: 33,
+        code: "victoriametrics",
+        name: "VictoriaMetrics",
+        cat: "D",
+        catName: "Observability",
+        license: "Apache-2.0",
+        verdict: "Strategic Standard",
+        verdictDetail: "RECOMMENDED (GOLD STANDARD FOR LONG-TERM METRICS).",
+        burden: "Ultra-Low",
+        costMo: 50,
+        useCase: "Long-Term Metric TSDB",
+        deploy: "Go single-binary or cluster-mode time-series database.",
+        capabilities: "Drop-in Prometheus long-term storage replacement. Lower RAM usage and superior compression.",
+        tco: "Ultra-Low. Easier to operate than Thanos or Cortex clusters.",
+        security: "Apache-2.0 license. TLS and auth proxy capabilities.",
+        diagram: "[Prometheus Remote Write] ---> [VictoriaMetrics Storage Engine] ---> [Grafana PromQL]"
+      },
+      {
+        id: 34,
+        code: "opensearch",
+        name: "OpenSearch",
+        cat: "D",
+        catName: "Observability",
+        license: "Apache-2.0",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR ENTERPRISE SEARCH & LOGS AT SCALE.",
+        burden: "High",
+        costMo: 350,
+        useCase: "Enterprise Log Search",
+        deploy: "Java distributed search & analytics engine (Elasticsearch 7.10 fork).",
+        capabilities: "Petabyte scale full-text search, log analytics, and SIEM security analytics.",
+        tco: "High. Requires JVM tuning and dedicated cluster coordination nodes.",
+        security: "Apache-2.0 permissive license. Free advanced security (SAML, Fine-Grained RBAC).",
+        diagram: "[Log Shippers] ---> [OpenSearch Cluster (Master/Data Nodes)] ---> [OpenSearch Dashboards]"
+      },
+
+      // Category E
+      {
+        id: 35,
+        code: "postgresql",
+        name: "PostgreSQL",
+        cat: "E",
+        catName: "Data & API",
+        license: "PostgreSQL",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY STRATEGIC STANDARD.",
+        burden: "Medium",
+        costMo: 100,
+        useCase: "Core Relational Database",
+        deploy: "C-based object-relational DBMS. Deployed bare-metal, VM, or CloudNativePG operator.",
+        capabilities: "Most advanced open source database. Robust JSONB, ACID compliance, pgvector support.",
+        tco: "Low to Medium. Trivial for standard apps; requires Patroni/PgBouncer for HA.",
+        security: "Extremely permissive license. Row-Level Security (RLS), pgaudit support.",
+        diagram: "[App Clients] ---> [PgBouncer Pooler] ---> [PostgreSQL Primary] <---> [Replica Standby]"
+      },
+      {
+        id: 36,
+        code: "valkey",
+        name: "Valkey",
+        cat: "E",
+        catName: "Data & API",
+        license: "BSD-3-Clause",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY IN-MEMORY STANDARD.",
+        burden: "Ultra-Low",
+        costMo: 30,
+        useCase: "In-Memory Cache / Store",
+        deploy: "C-based in-memory key-value data store. Open source fork of Redis 7.2 under Linux Foundation.",
+        capabilities: "Sub-millisecond caching and session management. 100% Redis wire-compatible drop-in.",
+        tco: "Ultra-Low. Extremely fast, low RAM overhead.",
+        security: "Permissive BSD-3-Clause license guarantees zero AGPL copyleft or RSAL fee risks.",
+        diagram: "[App Server] ---> [Valkey In-Memory Node (BSD-3)]"
+      },
+      {
+        id: 37,
+        code: "minio",
+        name: "MinIO",
+        cat: "E",
+        catName: "Data & API",
+        license: "AGPLv3",
+        verdict: "Adopt with Caution",
+        verdictDetail: "RECOMMENDED WITH LEGAL REVIEW.",
+        burden: "Medium",
+        costMo: 120,
+        useCase: "S3 Object Storage",
+        deploy: "Go distributed S3-compatible object storage server or K8s Operator.",
+        capabilities: "High-throughput enterprise object storage. Full S3 API compatibility.",
+        tco: "Medium. AGPLv3 license requires legal approval for SaaS embedding.",
+        security: "AGPLv3. Supports SSE-KMS, IAM policies, and bucket locking (WORM).",
+        diagram: "[S3 SDK Client] ---> [MinIO High-Performance Server] ---> [EBS / Local NVMe Disks]"
+      },
+      {
+        id: 38,
+        code: "postgrest",
+        name: "PostgREST",
+        cat: "E",
+        catName: "Data & API",
+        license: "MIT",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR POSTGRES-CENTRIC APIS.",
+        burden: "Ultra-Low",
+        costMo: 20,
+        useCase: "Automatic Postgres REST",
+        deploy: "Lightweight Haskell web server serving RESTful APIs directly from PostgreSQL schemas.",
+        capabilities: "Instant REST APIs over SQL tables. Leverages native Postgres RLS for authorization.",
+        tco: "Ultra-Low. Stateless binary with minimal memory usage.",
+        security: "MIT license. JWT tokens mapped directly to Postgres database roles.",
+        diagram: "[REST Client] ---> [PostgREST Binary] ---> [PostgreSQL DB (RLS Policies)]"
+      },
+      {
+        id: 39,
+        code: "directus",
+        name: "Directus",
+        cat: "E",
+        catName: "Data & API",
+        license: "GPLv3",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR HEADLESS CMS & LEGACY DB ACCESS.",
+        burden: "Low",
+        costMo: 50,
+        useCase: "Headless CMS & SQL API",
+        deploy: "Node.js API layer and Vue.js dashboard connected to any existing SQL DB.",
+        capabilities: "Headless CMS and instant REST/GraphQL overlay without changing existing DB schemas.",
+        tco: "Low. Non-destructive database abstraction layer.",
+        security: "GPLv3 core. Granular RBAC, SAML/OIDC SSO integrations.",
+        diagram: "[Web Admin / API] ---> [Directus Node Engine] ---> [Existing SQL DB (Postgres/MySQL)]"
+      },
+      {
+        id: 40,
+        code: "supabase",
+        name: "Supabase",
+        cat: "E",
+        catName: "Data & API",
+        license: "Apache-2.0",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR RAPID APPLICATION DEVELOPMENT.",
+        burden: "High",
+        costMo: 180,
+        useCase: "App Backend Framework",
+        deploy: "Bundled multi-container suite (Postgres, PostgREST, GoTrue Auth, Realtime, S3 Storage).",
+        capabilities: "Open source Firebase alternative. Phenomenal developer experience.",
+        tco: "Medium to High (Self-Hosted). Managing the multi-service cluster requires SRE effort.",
+        security: "Permissive Apache-2.0 core. Built-in JWT Auth & Postgres RLS.",
+        diagram: "[Mobile / Web SDK] ---> [Kong API Gateway]\n                                  /     |     \\\n                          [GoTrue] [PostgREST] [Realtime (Elixir)]\n                                  \\     |     /\n                                   [PostgreSQL]"
+      },
+      {
+        id: 41,
+        code: "nocodb",
+        name: "NocoDB",
+        cat: "E",
+        catName: "Data & API",
+        license: "AGPLv3",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR INTERNAL TOOLS & SPREADSHEETS.",
+        burden: "Low",
+        costMo: 35,
+        useCase: "No-Code Database Tables",
+        deploy: "Node.js application connecting to existing SQL databases (Postgres, MySQL).",
+        capabilities: "Turns relational databases into easy Airtable-like user spreadsheets.",
+        tco: "Low. Single Node service running over standard DBs.",
+        security: "AGPLv3 license. Basic RBAC; enterprise SSO on paid tier.",
+        diagram: "[Business Users] ---> [NocoDB Node UI] ---> [PostgreSQL / MySQL Data]"
+      },
+      {
+        id: 42,
+        code: "baserow",
+        name: "Baserow",
+        cat: "E",
+        catName: "Data & API",
+        license: "MIT",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR MODULAR NO-CODE DATA MANAGEMENT.",
+        burden: "Medium",
+        costMo: 70,
+        useCase: "Modular No-Code Engine",
+        deploy: "Django/Python backend, Nuxt/Vue frontend, PostgreSQL, and Redis/Celery.",
+        capabilities: "Modular no-code spreadsheet database platform built for scalability.",
+        tco: "Medium. Requires orchestrating a traditional Django + Celery stack.",
+        security: "Permissive MIT core. Premium tiers add SAML SSO and audit logs.",
+        diagram: "[Users] ---> [Nuxt Frontend] ---> [Django API] ---> [Postgres] + [Celery / Redis]"
+      },
+      {
+        id: 43,
+        code: "hasura",
+        name: "Hasura",
+        cat: "E",
+        catName: "Data & API",
+        license: "MIT",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR GRAPHQL UNIFICATION.",
+        burden: "Low",
+        costMo: 80,
+        useCase: "GraphQL Engine",
+        deploy: "Haskell execution engine sitting directly in front of Postgres, MySQL, or MS SQL.",
+        capabilities: "Auto-generates real-time, low-latency GraphQL APIs over database schemas.",
+        tco: "Low to Medium. Extremely fast Haskell execution core.",
+        security: "Permissive MIT core. Role-based access control integrated with JWT/Webhooks.",
+        diagram: "[GraphQL Client] ---> [Hasura Haskell Engine] ---> [PostgreSQL / MS SQL DB]"
+      },
+      {
+        id: 44,
+        code: "clickhouse",
+        name: "ClickHouse",
+        cat: "E",
+        catName: "Data & API",
+        license: "Apache-2.0",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY OLAP / ANALYTICS STANDARD.",
+        burden: "Medium",
+        costMo: 250,
+        useCase: "Columnar OLAP Analytics",
+        deploy: "C++ column-oriented DBMS built for real-time analytical processing at petabyte scale.",
+        capabilities: "Blazing query performance across billions of rows. Essential for telemetry/analytics.",
+        tco: "Medium. Requires specialized DBA knowledge for MergeTree partitioning.",
+        security: "Apache-2.0 license. Advanced RBAC, quotas, and column-level encryption.",
+        diagram: "[Telemetry Ingest] ---> [ClickHouse MergeTree Engine] ---> [Analytics Dashboards]"
+      },
+
+      // Category F
+      {
+        id: 45,
+        code: "trivy",
+        name: "Trivy",
+        cat: "F",
+        catName: "Security",
+        license: "Apache-2.0",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY DEVSECOPS STANDARD.",
+        burden: "Ultra-Low",
+        costMo: 15,
+        useCase: "Vulnerability & SBOM",
+        deploy: "Single Go binary CLI or Kubernetes Operator maintained by Aqua Security.",
+        capabilities: "All-in-one security scanner (containers, file systems, Git repos, SBOM generation).",
+        tco: "Ultra-Low. Easily embedded into CI/CD pipelines without backend servers.",
+        security: "Apache-2.0 license. Generates standard CycloneDX and SPDX SBOM outputs.",
+        diagram: "[CI/CD Pipeline] ---> [Trivy CLI Scan] ---> [Vulnerability DB] ---> [SARIF Report]"
+      },
+      {
+        id: 46,
+        code: "gitleaks",
+        name: "Gitleaks",
+        cat: "F",
+        catName: "Security",
+        license: "MIT",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY SECRET SCANNING STANDARD.",
+        burden: "Ultra-Low",
+        costMo: 10,
+        useCase: "Secret & Key Detection",
+        deploy: "Single Go binary CLI tool for detecting hardcoded secrets in Git commits.",
+        capabilities: "Fast regex and entropy-based secret detection engine.",
+        tco: "Ultra-Low. Zero backend infrastructure required.",
+        security: "Permissive MIT license. Prevents secret leaks prior to Git push.",
+        diagram: "[Git Commit Hook] ---> [Gitleaks Scan Engine] ---> [Block / Pass Commit]"
+      },
+      {
+        id: 47,
+        code: "nuclei",
+        name: "Nuclei",
+        cat: "F",
+        catName: "Security",
+        license: "MIT",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR DYNAMIC SECURITY TESTING.",
+        burden: "Low",
+        costMo: 20,
+        useCase: "Dynamic App Security",
+        deploy: "Fast, template-driven vulnerability scanner written in Go by ProjectDiscovery.",
+        capabilities: "Scans target applications using community YAML vulnerability templates.",
+        tco: "Low. Single CLI tool execution.",
+        security: "MIT license. Customizable YAML templates for custom security checks.",
+        diagram: "[Target Domain] <--- [Nuclei Go Engine (YAML Templates)] ---> [Alert Payload]"
+      },
+      {
+        id: 48,
+        code: "owasp-zap",
+        name: "OWASP ZAP",
+        cat: "F",
+        catName: "Security",
+        license: "Apache-2.0",
+        verdict: "Adopt",
+        verdictDetail: "RECOMMENDED FOR DAST IN PIPELINES.",
+        burden: "Medium",
+        costMo: 45,
+        useCase: "Automated DAST Testing",
+        deploy: "Java DAST scanner deployed as desktop app, Docker daemon, or CI runner.",
+        capabilities: "World's most widely used web app scanner. Intercepting proxy and active scanner.",
+        tco: "Medium. Requires AppSec script maintenance to handle SPA authentication.",
+        security: "Apache-2.0 license. Covers OWASP Top 10 vulnerabilities.",
+        diagram: "[Staging App] <--- [OWASP ZAP Intercepting Proxy] <--- [Automated Test Suite]"
+      },
+      {
+        id: 49,
+        code: "nmap",
+        name: "Nmap",
+        cat: "F",
+        catName: "Security",
+        license: "Nmap Lic.",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY NETWORK DISCOVERY STANDARD.",
+        burden: "Ultra-Low",
+        costMo: 10,
+        useCase: "Network Surface Mapping",
+        deploy: "Native C/C++ CLI utility for network discovery, port scanning, and OS fingerprinting.",
+        capabilities: "Unrivaled standard for network mapping and port discovery.",
+        tco: "Ultra-Low. Execution cost is negligible.",
+        security: "Nmap License (custom source-available). Standard tool for CIS audits.",
+        diagram: "[Security Runner] ---> [Nmap Engine] ---> [Target Subnet CIDR Block]"
+      },
+      {
+        id: 50,
+        code: "checkov",
+        name: "Checkov",
+        cat: "F",
+        catName: "Security",
+        license: "Apache-2.0",
+        verdict: "Strategic Standard",
+        verdictDetail: "MANDATORY IAC SECURITY STANDARD.",
+        burden: "Low",
+        costMo: 15,
+        useCase: "Infrastructure Static Code",
+        deploy: "Python static code analysis tool for Infrastructure as Code (Terraform, K8s, Helm).",
+        capabilities: "Scans IaC manifests for security and compliance misconfigurations (>1,000 policies).",
+        tco: "Low. Easily embedded into CI/CD build steps.",
+        security: "Apache-2.0 license. Maps directly to CIS, PCI-DSS, and SOC2 benchmarks.",
+        diagram: "[Terraform / K8s Code] ---> [Checkov Engine] ---> [CIS Policy Compliance Pass/Fail]"
+      }
+    ];
+
+    /* ==========================================================================
+       APP STATE MANAGEMENT & CONTROLLERS
+       ========================================================================== */
+    let currentCategoryFilter = 'ALL';
+    let currentVerdictFilter = 'ALL';
+    let currentSearchTerm = '';
+    let selectedStackToolIds = new Set([18, 19, 26, 27, 35, 36, 45, 46]); // Pre-selected default standard stack
+    let gridColumns = 3;
+    let activeModalToolId = null;
+
+    // On Load Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderEstimatorCategories();
+      updateEstimatorSummary();
+      renderToolsGrid();
+      renderMatrixTable();
+    });
+
+    // Scroll helper
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* ==========================================================================
+       TOOL EXPLORER FILTER & GRID RENDERING
+       ========================================================================== */
+    function setCategoryFilter(cat) {
+      currentCategoryFilter = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-cyan-500', 'text-slate-950', 'font-semibold');
+        btn.classList.add('bg-slate-800', 'text-slate-300');
+      });
+      event.currentTarget.classList.add('active', 'bg-cyan-500', 'text-slate-950', 'font-semibold');
+      event.currentTarget.classList.remove('bg-slate-800', 'text-slate-300');
+      renderToolsGrid();
+    }
+
+    function setVerdictFilter(verdict) {
+      currentVerdictFilter = verdict;
+      document.querySelectorAll('.verdict-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+      renderToolsGrid();
+    }
+
+    function handleSearchFilter() {
+      const input = document.getElementById('search-input');
+      currentSearchTerm = input.value.toLowerCase().trim();
+      document.getElementById('search-clear').classList.toggle('hidden', currentSearchTerm === '');
+      renderToolsGrid();
+    }
+
+    function clearSearch() {
+      document.getElementById('search-input').value = '';
+      currentSearchTerm = '';
+      document.getElementById('search-clear').classList.add('hidden');
+      renderToolsGrid();
+    }
+
+    function resetAllFilters() {
+      currentCategoryFilter = 'ALL';
+      currentVerdictFilter = 'ALL';
+      currentSearchTerm = '';
+      document.getElementById('search-input').value = '';
+      renderToolsGrid();
+    }
+
+    function setGridColumns(cols) {
+      gridColumns = cols;
+      const grid = document.getElementById('tools-grid');
+      if (cols === 2) {
+        grid.className = "grid grid-cols-1 md:grid-cols-2 gap-6";
+        document.getElementById('btn-grid-2').className = "p-1 rounded bg-slate-800 text-cyan-400";
+        document.getElementById('btn-grid-3').className = "p-1 rounded bg-slate-900 text-slate-500 hover:text-white";
+      } else {
+        grid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+        document.getElementById('btn-grid-3').className = "p-1 rounded bg-slate-800 text-cyan-400";
+        document.getElementById('btn-grid-2').className = "p-1 rounded bg-slate-900 text-slate-500 hover:text-white";
+      }
+    }
+
+    function getFilteredTools() {
+      return TOOLS_DATA.filter(tool => {
+        const matchesCategory = (currentCategoryFilter === 'ALL') || (tool.cat === currentCategoryFilter);
+        const matchesVerdict = (currentVerdictFilter === 'ALL') || 
+          (currentVerdictFilter === 'Strategic Standard' && tool.verdict === 'Strategic Standard') ||
+          (currentVerdictFilter === 'Adopt' && tool.verdict === 'Adopt') ||
+          (currentVerdictFilter === 'Adopt with Caution' && tool.verdict === 'Adopt with Caution') ||
+          (currentVerdictFilter === 'Avoid' && tool.verdict === 'Avoid');
+        
+        const matchesSearch = currentSearchTerm === '' ||
+          tool.name.toLowerCase().includes(currentSearchTerm) ||
+          tool.license.toLowerCase().includes(currentSearchTerm) ||
+          tool.useCase.toLowerCase().includes(currentSearchTerm) ||
+          tool.catName.toLowerCase().includes(currentSearchTerm) ||
+          tool.verdictDetail.toLowerCase().includes(currentSearchTerm);
+
+        return matchesCategory && matchesVerdict && matchesSearch;
+      });
+    }
+
+    function getVerdictBadgeHTML(verdict) {
+      if (verdict === 'Strategic Standard') {
+        return `<span class="px-2.5 py-1 rounded-md text-[11px] font-black uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-500/40 shadow-sm flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3"></i> Strategic Standard</span>`;
+      } else if (verdict === 'Adopt') {
+        return `<span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-cyan-950 text-cyan-400 border border-cyan-500/40 shadow-sm flex items-center gap-1"><i data-lucide="check" class="w-3 h-3"></i> Adopt</span>`;
+      } else if (verdict === 'Adopt with Caution') {
+        return `<span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-amber-950 text-amber-400 border border-amber-500/40 shadow-sm flex items-center gap-1"><i data-lucide="alert-triangle" class="w-3 h-3"></i> Adopt w/ Caution</span>`;
+      } else {
+        return `<span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-rose-950 text-rose-400 border border-rose-500/40 shadow-sm flex items-center gap-1"><i data-lucide="x-circle" class="w-3 h-3"></i> Avoid for New</span>`;
+      }
+    }
+
+    function getBurdenBadgeHTML(burden) {
+      if (burden === 'Ultra-Low') return `<span class="text-emerald-400 font-mono font-bold">Ultra-Low</span>`;
+      if (burden === 'Low') return `<span class="text-cyan-400 font-mono font-bold">Low</span>`;
+      if (burden === 'Medium') return `<span class="text-amber-400 font-mono font-bold">Medium</span>`;
+      return `<span class="text-rose-400 font-mono font-bold">High</span>`;
+    }
+
+    function renderToolsGrid() {
+      const container = document.getElementById('tools-grid');
+      const emptyState = document.getElementById('empty-state');
+      const filtered = getFilteredTools();
+
+      document.getElementById('visible-count').innerText = filtered.length;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      container.innerHTML = filtered.map(tool => {
+        const isSelectedInEstimator = selectedStackToolIds.has(tool.id);
+        return `
+          <div class="glass-card glass-card-hover rounded-2xl p-5 flex flex-col justify-between border border-slate-800/80 bg-slate-900/60 relative">
+            <div>
+              <!-- Top Row Metadata -->
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-2 py-0.5 rounded bg-slate-800/80 border border-slate-700/60">
+                  Cat ${tool.cat}: ${tool.catName}
+                </span>
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-950 text-slate-300 border border-slate-800">
+                  ${tool.license}
+                </span>
+              </div>
+
+              <!-- Title & Use Case -->
+              <div class="mb-3">
+                <h3 class="text-xl font-black text-white hover:text-cyan-400 transition-colors cursor-pointer flex items-center gap-2" onclick="openDetailModal(${tool.id})">
+                  ${tool.name}
+                </h3>
+                <p class="text-xs text-slate-400 mt-1 line-clamp-1">${tool.useCase}</p>
+              </div>
+
+              <!-- Verdict Badge -->
+              <div class="mb-4">
+                ${getVerdictBadgeHTML(tool.verdict)}
+              </div>
+
+              <!-- Quick Metrics -->
+              <div class="grid grid-cols-2 gap-2 py-2.5 px-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs mb-4">
+                <div>
+                  <span class="text-[10px] text-slate-500 uppercase block">Op Burden</span>
+                  ${getBurdenBadgeHTML(tool.burden)}
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-500 uppercase block">Est Compute</span>
+                  <span class="font-mono text-slate-200 font-bold">$${tool.costMo}/mo</span>
+                </div>
+              </div>
+
+              <!-- Brief Deploy snippet -->
+              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
+                ${tool.deploy}
+              </p>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
+              <button onclick="openDetailModal(${tool.id})" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors flex items-center gap-1">
+                <span>Full Audit</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-cyan-400"></i>
+              </button>
+
+              <button 
+                onclick="toggleToolInEstimator(${tool.id})" 
+                class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  isSelectedInEstimator 
+                    ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/40' 
+                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }"
+              >
+                <i data-lucide="${isSelectedInEstimator ? 'check' : 'plus'}" class="w-3.5 h-3.5"></i>
+                <span>${isSelectedInEstimator ? 'In Stack' : 'Add Stack'}</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    /* ==========================================================================
+       ENTERPRISE DECISION MATRIX TABLE
+       ========================================================================== */
+    function renderMatrixTable() {
+      const tbody = document.getElementById('matrix-table-body');
+      tbody.innerHTML = TOOLS_DATA.map(tool => `
+        <tr class="hover:bg-slate-900/80 transition-colors">
+          <td class="py-3 px-4 font-mono text-slate-500">${tool.id}</td>
+          <td class="py-3 px-4 font-bold text-white cursor-pointer hover:text-cyan-400" onclick="openDetailModal(${tool.id})">
+            ${tool.name}
+          </td>
+          <td class="py-3 px-4 text-slate-400">Category ${tool.cat} (${tool.catName})</td>
+          <td class="py-3 px-4 font-mono text-cyan-400">${tool.license}</td>
+          <td class="py-3 px-4 text-slate-300">${tool.useCase}</td>
+          <td class="py-3 px-4">${getVerdictBadgeHTML(tool.verdict)}</td>
+          <td class="py-3 px-4">${getBurdenBadgeHTML(tool.burden)}</td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="openDetailModal(${tool.id})" class="px-2.5 py-1 text-[11px] font-bold rounded bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+              Inspect
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function exportMatrixCSV() {
+      let csv = "ID,Tool Name,Category Code,Category Name,License,Primary Use Case,Verdict,Operational Burden,Est Monthly Compute USD\n";
+      TOOLS_DATA.forEach(t => {
+        csv += `"${t.id}","${t.name}","${t.cat}","${t.catName}","${t.license}","${t.useCase}","${t.verdict}","${t.burden}","${t.costMo}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "Enterprise_Open_Source_Matrix_2026.csv";
+      a.click();
+      showToast("Exported Decision Matrix as CSV");
+    }
+
+    /* ==========================================================================
+       INTERACTIVE TCO & STACK ESTIMATOR ENGINE
+       ========================================================================== */
+    function renderEstimatorCategories() {
+      const container = document.getElementById('estimator-categories');
+      const categories = [
+        { code: "A", name: "Category A: Project & Issue Tracking" },
+        { code: "B", name: "Category B: Documentation & Knowledge" },
+        { code: "C", name: "Category C: CI/CD & DevOps" },
+        { code: "D", name: "Category D: Observability & Monitoring" },
+        { code: "E", name: "Category E: Data, Database & API" },
+        { code: "F", name: "Category F: Security & Scanning" }
+      ];
+
+      container.innerHTML = categories.map(cat => {
+        const toolsInCat = TOOLS_DATA.filter(t => t.cat === cat.code);
+        return `
+          <div>
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">${cat.name}</div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              ${toolsInCat.map(tool => {
+                const checked = selectedStackToolIds.has(tool.id);
+                return `
+                  <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 cursor-pointer text-xs select-none">
+                    <input 
+                      type="checkbox" 
+                      value="${tool.id}" 
+                      ${checked ? 'checked' : ''} 
+                      onchange="toggleToolInEstimator(${tool.id})" 
+                      class="rounded bg-slate-900 border-slate-700 text-cyan-500 focus:ring-0"
+                    />
+                    <span class="font-medium ${checked ? 'text-cyan-400 font-bold' : 'text-slate-300'}">${tool.name}</span>
+                  </label>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleToolInEstimator(toolId) {
+      if (selectedStackToolIds.has(toolId)) {
+        selectedStackToolIds.delete(toolId);
+      } else {
+        selectedStackToolIds.add(toolId);
+      }
+      renderEstimatorCategories();
+      updateEstimatorSummary();
+      renderToolsGrid();
+    }
+
+    function resetStackEstimator() {
+      selectedStackToolIds.clear();
+      renderEstimatorCategories();
+      updateEstimatorSummary();
+      renderToolsGrid();
+      showToast("Reset stack selection");
+    }
+
+    function updateEstimatorSummary() {
+      const selectedTools = TOOLS_DATA.filter(t => selectedStackToolIds.has(t.id));
+      
+      // Compute stats
+      let totalCost = 0;
+      let agplCount = 0;
+      let highBurdenCount = 0;
+
+      selectedTools.forEach(t => {
+        totalCost += t.costMo;
+        if (t.license.includes('AGPL') || t.license.includes('BSL')) agplCount++;
+        if (t.burden === 'High') highBurdenCount++;
+      });
+
+      document.getElementById('tco-cost').innerText = totalCost;
+      document.getElementById('tco-count').innerText = selectedTools.length;
+
+      // Cost Bar Progress
+      const barPercent = Math.min(100, Math.round((totalCost / 1200) * 100));
+      document.getElementById('tco-cost-bar').style.width = barPercent + '%';
+
+      // Burden logic
+      const burdenText = document.getElementById('tco-burden-text');
+      const burdenBadge = document.getElementById('tco-burden-badge');
+      const burdenDesc = document.getElementById('tco-burden-desc');
+
+      if (highBurdenCount >= 3 || selectedTools.length > 8) {
+        burdenText.innerText = "Heavy SRE Overhead";
+        burdenBadge.className = "px-2 py-0.5 rounded text-xs font-semibold bg-rose-950 text-rose-400 border border-rose-500/30";
+        burdenBadge.innerText = "HIGH";
+        burdenDesc.innerText = "Requires dedicated Kubernetes SRE bandwidth, clustering HA, and database DBA maintenance.";
+      } else if (highBurdenCount >= 1 || selectedTools.length > 4) {
+        burdenText.innerText = "Moderate Maintenance";
+        burdenBadge.className = "px-2 py-0.5 rounded text-xs font-semibold bg-amber-950 text-amber-400 border border-amber-500/30";
+        burdenBadge.innerText = "MEDIUM";
+        burdenDesc.innerText = "Standard containerized operational load; automated backup pipelines recommended.";
+      } else {
+        burdenText.innerText = "Minimal Overhead";
+        burdenBadge.className = "px-2 py-0.5 rounded text-xs font-semibold bg-emerald-950 text-emerald-400 border border-emerald-500/30";
+        burdenBadge.innerText = "LOW";
+        burdenDesc.innerText = "Lightweight footprint; single binaries or minimal state services.";
+      }
+
+      // AGPL Risk Status
+      document.getElementById('tco-agpl-count').innerText = `${agplCount} AGPL / BSL Tools`;
+      const agplStatus = document.getElementById('tco-agpl-status');
+      if (agplCount > 0) {
+        agplStatus.innerText = "Legal Audit Reqd";
+        agplStatus.className = "text-amber-400 text-xs font-bold";
+      } else {
+        agplStatus.innerText = "Permissive / Safe";
+        agplStatus.className = "text-emerald-400 text-xs font-bold";
+      }
+
+      // Selected Tags List
+      const tagsContainer = document.getElementById('tco-selected-tags');
+      if (selectedTools.length === 0) {
+        tagsContainer.innerHTML = `<span class="text-xs text-slate-500 italic">No tools selected yet. Select above.</span>`;
+      } else {
+        tagsContainer.innerHTML = selectedTools.map(t => `
+          <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-slate-800 text-cyan-300 text-[11px] font-mono border border-slate-700">
+            ${t.name}
+            <button onclick="toggleToolInEstimator(${t.id})" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-3 h-3"></i></button>
+          </span>
+        `).join('');
+        lucide.createIcons();
+      }
+    }
+
+    function exportCurrentStackConfig() {
+      const selectedTools = TOOLS_DATA.filter(t => selectedStackToolIds.has(t.id));
+      if (selectedTools.length === 0) {
+        showToast("Please select at least one tool to export.");
+        return;
+      }
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(selectedTools, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "Target_Enterprise_Architecture_Stack_2026.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("Exported Stack Spec JSON");
+    }
+
+    /* ==========================================================================
+       DETAIL ASSESSMENT MODAL CONTROLLER
+       ========================================================================== */
+    function openDetailModal(toolId) {
+      const tool = TOOLS_DATA.find(t => t.id === toolId);
+      if (!tool) return;
+      activeModalToolId = toolId;
+
+      document.getElementById('modal-title').innerText = tool.name;
+      document.getElementById('modal-category').innerText = `Category ${tool.cat}: ${tool.catName}`;
+      document.getElementById('modal-license').innerText = tool.license;
+
+      // Verdict Box Styling
+      const verdictBox = document.getElementById('modal-verdict-box');
+      const verdictIcon = document.getElementById('modal-verdict-icon');
+      const verdictText = document.getElementById('modal-verdict-text');
+      verdictText.innerText = tool.verdictDetail;
+
+      if (tool.verdict === 'Strategic Standard') {
+        verdictBox.className = "p-4 rounded-xl border border-emerald-500/40 bg-emerald-950/40 flex items-center gap-4";
+        verdictIcon.className = "w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 font-bold";
+        verdictIcon.innerHTML = `<i data-lucide="shield-check" class="w-6 h-6"></i>`;
+      } else if (tool.verdict === 'Adopt') {
+        verdictBox.className = "p-4 rounded-xl border border-cyan-500/40 bg-cyan-950/40 flex items-center gap-4";
+        verdictIcon.className = "w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 font-bold";
+        verdictIcon.innerHTML = `<i data-lucide="check" class="w-6 h-6"></i>`;
+      } else if (tool.verdict === 'Adopt with Caution') {
+        verdictBox.className = "p-4 rounded-xl border border-amber-500/40 bg-amber-950/40 flex items-center gap-4";
+        verdictIcon.className = "w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 font-bold";
+        verdictIcon.innerHTML = `<i data-lucide="alert-triangle" class="w-6 h-6"></i>`;
+      } else {
+        verdictBox.className = "p-4 rounded-xl border border-rose-500/40 bg-rose-950/40 flex items-center gap-4";
+        verdictIcon.className = "w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 font-bold";
+        verdictIcon.innerHTML = `<i data-lucide="x-circle" class="w-6 h-6"></i>`;
+      }
+
+      document.getElementById('modal-deploy').innerText = tool.deploy;
+      document.getElementById('modal-capabilities').innerText = tool.capabilities;
+      document.getElementById('modal-tco-badge').innerHTML = `Operational Overhead: ${getBurdenBadgeHTML(tool.burden)} (~$${tool.costMo}/mo compute)`;
+      document.getElementById('modal-tco').innerText = tool.tco;
+      document.getElementById('modal-security').innerText = tool.security;
+      document.getElementById('modal-diagram').innerText = tool.diagram;
+
+      // Toggle Stack Button state
+      updateModalStackButtonState();
+
+      document.getElementById('detail-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function updateModalStackButtonState() {
+      const btn = document.getElementById('modal-toggle-stack-btn');
+      const isSelected = selectedStackToolIds.has(activeModalToolId);
+      if (isSelected) {
+        btn.className = "px-4 py-2 text-xs font-bold rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-500/40 flex items-center gap-2";
+        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> <span>In Target Stack</span>`;
+      } else {
+        btn.className = "px-4 py-2 text-xs font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-2";
+        btn.innerHTML = `<i data-lucide="plus" class="w-4 h-4"></i> <span>Add to TCO Estimator</span>`;
+      }
+      lucide.createIcons();
+    }
+
+    function toggleToolInEstimatorFromModal() {
+      if (activeModalToolId) {
+        toggleToolInEstimator(activeModalToolId);
+        updateModalStackButtonState();
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('detail-modal').classList.add('hidden');
+    }
+
+    /* ==========================================================================
+       MONETIZATION & DIGITAL PURCHASE SIMULATION MODAL
+       ========================================================================== */
+    function openPurchaseModal(itemName) {
+      document.getElementById('purchase-item-name').innerText = itemName;
+      document.getElementById('purchase-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closePurchaseModal() {
+      document.getElementById('purchase-modal').classList.add('hidden');
+    }
+
+    function handleSimulatedCheckout(e) {
+      e.preventDefault();
+      closePurchaseModal();
+      showToast("Purchase Complete! Assets sent to your email.");
+    }
+
+    /* ==========================================================================
+       TOAST NOTIFICATION ENGINE
+       ========================================================================== */
+    function showToast(message) {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
