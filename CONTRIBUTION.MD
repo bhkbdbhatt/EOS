@@ -43,11 +43,8 @@ When submitting a new tool assessment or revising an existing one, you **must** 
   ```text
   [Component A] ---> [Component B] ---> [Data Store]
 
-* **Enterprise Verdict:** [RECOMMENDED / RECOMMENDED WITH CAUTION / NOT RECOMMENDED] + [Single-sentence contextual directive]
+***Enterprise Verdict:** [RECOMMENDED / RECOMMENDED WITH CAUTION / NOT RECOMMENDED] + [Single-sentence contextual directive]
 
-```
-
----
 
 ## 🔀 Pull Request Process
 
