@@ -15,7 +15,7 @@ An independent, opinionated evaluation suite auditing **50 enterprise open-sourc
 
 Experience the full interactive suite, including the **Live Stack Configurator**, **Interactive TCO Estimator**, **Dynamic Matrix Filters**, and **Visual Architecture Cards**:
 
-👉 **[Launch Interactive Web App](https://your-domain.com)** *(Replace with your live deployment URL)*
+👉 **[Launch Interactive Web App](https://bhkbdbhatt.github.io/EOS/enterprise_open_source_evaluation_suite.html)** *(Replace with your live deployment URL)*
 
 ---
 
