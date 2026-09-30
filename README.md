@@ -1,4 +1,4 @@
-```markdown
+
 # Enterprise Open Source Architecture Matrix & Evaluation Suite (2026 Edition)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -94,9 +94,9 @@ Looking to accelerate enterprise adoption, present to executive leadership, or d
 
 | Package | Contents | Access / Order |
 | --- | --- | --- |
-| **Complete Architectural Briefing** | Full 200+ page PDF Executive Briefing + Complete Raw Markdown repository + Decision Matrix CSV | [Download PDF Package](https://www.google.com/search?q=%23) |
-| **Production IaC Deployment Kit** | Vetted Helm Charts, Kustomize overlays, and Terraform modules for the top recommended stack | [Access IaC Blueprint](https://www.google.com/search?q=%23) |
-| **Enterprise Advisory Bundle** | Complete Briefing + IaC Blueprints + 2 Hours 1-on-1 Architecture Review with Senior SRE | [Book Architecture Audit](https://www.google.com/search?q=%23) |
+| **Complete Architectural Briefing** | Full 200+ page PDF Executive Briefing + Complete Raw Markdown repository + Decision Matrix CSV | [Download PDF Package] |
+| **Production IaC Deployment Kit** | Vetted Helm Charts, Kustomize overlays, and Terraform modules for the top recommended stack | [Access IaC Blueprint] |
+| **Enterprise Advisory Bundle** | Complete Briefing + IaC Blueprints + 2 Hours 1-on-1 Architecture Review with Senior SRE | [Book Architecture Audit] |
 
 ---
 
