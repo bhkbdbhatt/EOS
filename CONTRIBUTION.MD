@@ -32,7 +32,6 @@ We welcome contributions in the following areas:
 
 When submitting a new tool assessment or revising an existing one, you **must** follow this structure:
 
-```markdown
 ### [Tool Name] ([License])
 
 - **Deployment & Architecture:** [Monolithic/Microservice topology, compute/RAM footprint, state dependencies, background execution engines]
@@ -43,8 +42,6 @@ When submitting a new tool assessment or revising an existing one, you **must** 
 - **Architecture Diagram & Data Flow:**
   ```text
   [Component A] ---> [Component B] ---> [Data Store]
-
-```
 
 * **Enterprise Verdict:** [RECOMMENDED / RECOMMENDED WITH CAUTION / NOT RECOMMENDED] + [Single-sentence contextual directive]
 
