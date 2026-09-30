@@ -83,5 +83,3 @@ We are committed to providing a welcoming, collaborative, and professional envir
 By contributing to this repository, you agree that your contributions will be licensed under the project's [MIT License](https://www.google.com/search?q=LICENSE).
 
 ```
-
-```
